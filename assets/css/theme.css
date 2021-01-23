@@ -1,0 +1,36 @@
+/* 
+colors
+
+ef476f paradise pink
+FFD166 orange yellow crayola
+06D6A0 carribean green
+139FCD cerulean crayola
+073B4C midnight green eagle green
+*/
+
+.titleBar {
+	background-color: #06D6A0;
+}
+
+.citySelectorArea {
+	background-color: #EF476F;
+}
+
+ul.cityList {
+	background-color: #139FCD;
+	border-color: #073B4C;
+}
+
+ul.cityList li {
+	border-color: #073B4C;
+}
+
+ul.cityList li:hover {
+	background-color: #073B4C;
+	border-color: #073B4C;
+	color: white;
+}
+
+.forecastArea {
+	background-color: #FFD166;
+}
