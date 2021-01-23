@@ -1,0 +1,51 @@
+html,
+body,
+body>div.container-fluid {
+	height: 100%;
+}
+
+body>div.container-fluid {
+	display: flex;
+	flex-direction: column;
+}
+
+
+/* title bar */
+
+.titleBar {
+	height: 70px;
+	background-color: lightblue;
+	align-items: center;
+	justify-content: center;
+	padding: 0 15px;
+}
+
+.titleBar * {
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+
+/* misc formatting */
+
+.contentArea {
+	flex: 1 1 auto;
+}
+
+.contentArea>div {
+	padding: 15px;
+}
+
+
+/* city selector area */
+
+.citySelectorArea {
+	background-color: salmon;
+}
+
+
+/* forecast area */
+
+.forecastArea {
+	background-color: yellow;
+}
