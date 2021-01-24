@@ -36,6 +36,15 @@ ul.cityList li:active {
 	border-color: #073B4C;
 	color: white;
 }
+
+ul.cityList li button.deleteButton {
+	color: white;
+}
+
+ul.cityList li button.deleteButton:hover {
+	color: red;
+}
+
 .forecastArea {
 	background-color: #FFD166;
 }

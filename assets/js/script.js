@@ -15,6 +15,7 @@ $(function () {
 	function populateCities(modCity = "") {
 		// accepts a number or a string
 		// if string, adds string to city list
+		// if number, deletes string from city list at # position
 
 		let citiesArray = JSON.parse(localStorage.getItem("searchedCities"));
 
@@ -28,6 +29,9 @@ $(function () {
 
 		// if a city string has been provided, add it to the array
 		if (typeof modCity === "string" && !(modCity === "")) citiesArray.push(modCity);
+
+		// if a city number has been provided, remove it from the array
+		if (typeof modCity === "number" && modCity > 0 && modCity < citiesArray.length) citiesArray.splice(modCity, 1);
 
 		$cityList.empty();
 		$cityList.css("display", "none");
