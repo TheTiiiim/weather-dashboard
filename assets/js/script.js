@@ -31,39 +31,40 @@ $(function () {
 		if (typeof modCity === "string" && !(modCity === "")) citiesArray.push(modCity);
 
 		// if a city number has been provided, remove it from the array
-		if (typeof modCity === "number" && modCity > 0 && modCity < citiesArray.length) citiesArray.splice(modCity, 1);
+		if (typeof modCity === "number" && modCity >= 0 && modCity < citiesArray.length) citiesArray.splice(modCity, 1);
 
 		$cityList.empty();
 		$cityList.css("display", "none");
 
-		if (citiesArray.length === 0) return;
+		if (!(citiesArray.length === 0)) {
 
-		$cityList.css("display", "block");
+			$cityList.css("display", "block");
 
-		// populate city list
-		citiesArray.forEach((city, index) => {
-			$cityList.append(
-				$("<li>").attr("tabindex", -1)
-					// content
-					.append(
-						$("<div>").text(city)
-					)
-					// delete button
-					.append(
-						$("<button>")
-							// click handler
-							.on("click", function (e) {
-								populateCities(parseInt($(this).attr("data-cityIndex")));
-							})
-							// metadata
-							.addClass("deleteButton")
-							.attr("data-cityIndex", index)
-							.append(
-								$("<i>").addClass("bi bi-x-circle")
-							)
-					)
-			);
-		});
+			// populate city list
+			citiesArray.forEach((city, index) => {
+				$cityList.append(
+					$("<li>").attr("tabindex", -1)
+						// content
+						.append(
+							$("<div>").text(city)
+						)
+						// delete button
+						.append(
+							$("<button>")
+								// click handler
+								.on("click", function (e) {
+									populateCities(parseInt($(this).attr("data-cityIndex")));
+								})
+								// metadata
+								.addClass("deleteButton")
+								.attr("data-cityIndex", index)
+								.append(
+									$("<i>").addClass("bi bi-x-circle")
+								)
+						)
+				);
+			});
+		}
 
 		localStorage.setItem("searchedCities", JSON.stringify(citiesArray));
 	}
