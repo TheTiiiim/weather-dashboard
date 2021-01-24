@@ -8,12 +8,8 @@ FFD166 orange yellow crayola
 073B4C midnight green eagle green
 */
 
-.titleBar {
+body {
 	background-color: #06D6A0;
-}
-
-.citySelectorArea {
-	background-color: #EF476F;
 }
 
 ul.cityList {
@@ -43,8 +39,4 @@ ul.cityList li button.deleteButton {
 
 ul.cityList li button.deleteButton:hover {
 	color: red;
-}
-
-.forecastArea {
-	background-color: #FFD166;
 }
