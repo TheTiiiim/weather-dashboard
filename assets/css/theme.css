@@ -31,6 +31,11 @@ ul.cityList li:hover {
 	color: white;
 }
 
+ul.cityList li:active {
+	background-color: black;
+	border-color: #073B4C;
+	color: white;
+}
 .forecastArea {
 	background-color: #FFD166;
 }

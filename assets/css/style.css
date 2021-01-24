@@ -61,8 +61,15 @@ ul.cityList {
 }
 
 ul.cityList li {
-	padding: 10px 15px;
+	padding: 0 15px;
+	height: 50px;
 	cursor: pointer;
+	display: flex;
+	align-items: center;
+}
+
+ul.cityList li div {
+	flex: 1 1 auto;
 }
 
 ul.cityList li:not(:first-child) {
@@ -70,10 +77,13 @@ ul.cityList li:not(:first-child) {
 }
 
 ul.cityList li:first-child {
-	border-radius: 10px 10px 0 0;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
 }
 
 ul.cityList li:last-child {
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
 	border-radius: 0 0 10px 10px;
 }
 
