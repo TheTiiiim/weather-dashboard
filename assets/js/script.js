@@ -133,6 +133,8 @@ $(function () {
 		// if a city string has been provided, add it to the array
 		if (typeof modCity === "string" && !(modCity === "")) citiesArray.push(modCity);
 
+		if (typeof modCity === "string" && modCity === "") citySearch(citiesArray[0], displayWeather);
+
 		// if a city number has been provided, remove it from the array
 		if (typeof modCity === "number" && modCity >= 0 && modCity < citiesArray.length) citiesArray.splice(modCity, 1);
 
