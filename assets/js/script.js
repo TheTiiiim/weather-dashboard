@@ -1,6 +1,40 @@
 $(function () {
 	let $cityList = $(".cityList");
+	let key = "cf96a97db48bd4eab6288cbdfae18c73";
 	populateCities();
+	multidaySearch("manchester").then(function (data) {
+		// let temperature = data.main.temp;
+		// let humidity = data.main.humidity;
+		// let windSpeed = data.wind.speed;
+		// let UVIndex;
+
+		let multidayForecast = []
+
+		for (let i = 0; i < 5; i++) {
+			let forecast = data.list[i * 8];
+			let simpleForecast = {};
+
+			simpleForecast.date = forecast.dt_txt.slice(0, 10);
+			simpleForecast.iconID = forecast.weather[0].id;
+			simpleForecast.temp = forecast.main.temp;
+			simpleForecast.humidity = forecast.main.humidity;
+
+
+			multidayForecast.push(simpleForecast);
+		}
+
+		// let iconID;
+		// imageURL = `http://openweathermap.org/img/wn/${iconID}@4x.png`;
+
+		// display multiday forecast
+
+
+	});
+
+	function multidaySearch(city) {
+		let multidaystring = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${key}&units=imperial`;
+		return $.get(multidaystring);
+	}
 
 	$(".citySearch").on("submit", function (e) {
 		e.preventDefault();
