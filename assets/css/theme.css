@@ -13,24 +13,22 @@ body {
 }
 
 ul.cityList {
-	background-color: #139FCD;
+	background-color: #073B4C;
 	border-color: #073B4C;
 }
 
 ul.cityList li {
-	border-color: #073B4C;
+	background-color: #139FCD;
+	border-top-color: #073B4C;
 }
 
 ul.cityList li:hover {
 	background-color: #073B4C;
-	border-color: #073B4C;
 	color: white;
 }
 
 ul.cityList li:active {
 	background-color: black;
-	border-color: #073B4C;
-	color: white;
 }
 
 ul.cityList li button.deleteButton {

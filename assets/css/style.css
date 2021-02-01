@@ -56,7 +56,8 @@ ul.cityList {
 	display: none;
 	list-style-type: none;
 	padding: 0;
-	border: 3px solid;
+	border-width: 3px;
+	border-style: solid;
 	border-radius: 15px;
 }
 
@@ -73,7 +74,8 @@ ul.cityList li div {
 }
 
 ul.cityList li:not(:first-child) {
-	border-top: 1px solid;
+	border-top-width: 1px;
+	border-top-style: solid;
 }
 
 ul.cityList li:first-child {
