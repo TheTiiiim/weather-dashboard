@@ -7,6 +7,14 @@ $(function () {
 		return `http://openweathermap.org/img/wn/${id}.png`;
 	}
 
+	function titleCase(str) {
+		str = str.toLowerCase().split(' ');
+		for (var i = 0; i < str.length; i++) {
+			str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
+		}
+		return str.join(' ');
+	}
+
 	function displayWeather(weatherData) {
 
 		let multidayForecastArea = $("<div>").addClass("forecast row");
@@ -111,7 +119,7 @@ $(function () {
 
 	$(".citySearch").on("submit", function (e) {
 		e.preventDefault();
-		let cityName = $(this).serializeArray()[0].value;
+		let cityName = titleCase($(this).serializeArray()[0].value);
 
 		$("#citySearchBox").val("");
 
