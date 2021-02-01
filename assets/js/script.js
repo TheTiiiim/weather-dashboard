@@ -4,7 +4,7 @@ $(function () {
 	populateCities();
 
 	function getWeatherIconSrc(id) {
-		return `http://openweathermap.org/img/wn/${id}.png`;
+		return `https://openweathermap.org/img/wn/${id}.png`;
 	}
 
 	function titleCase(str) {
