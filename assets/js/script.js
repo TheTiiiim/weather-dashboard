@@ -2,38 +2,102 @@ $(function () {
 	let $cityList = $(".cityList");
 	let key = "cf96a97db48bd4eab6288cbdfae18c73";
 	populateCities();
-	multidaySearch("manchester").then(function (data) {
-		// let temperature = data.main.temp;
-		// let humidity = data.main.humidity;
-		// let windSpeed = data.wind.speed;
-		// let UVIndex;
 
-		let multidayForecast = []
+	function getWeatherIconSrc(id) {
+		return `http://openweathermap.org/img/wn/${id}@4x.png`;
+	}
 
-		for (let i = 0; i < 5; i++) {
-			let forecast = data.list[i * 8];
-			let simpleForecast = {};
+	function displayWeather(weatherData) {
 
-			simpleForecast.date = forecast.dt_txt.slice(0, 10);
-			simpleForecast.iconID = forecast.weather[0].id;
-			simpleForecast.temp = forecast.main.temp;
-			simpleForecast.humidity = forecast.main.humidity;
+		let multidayForecastArea = $("<div>").addClass("forecast row");
 
-
-			multidayForecast.push(simpleForecast);
+		for (let i = 0; i < weatherData.multiday.length; i++) {
+			multidayForecastArea.append($("<div>")
+				.addClass("summaryWeather col-xl-4 col-md-6 col-sm-12")
+				.append($("<div>").addClass("summaryBorder")
+					.append($("<h4>").text(weatherData.multiday[i].date))
+					.append($("<p>").text("icon"))
+					.append($("<p>")
+						.text(`Temperature: ${weatherData.multiday[i].temp}`)
+					)
+					.append($("<p>")
+						.text(`Humidity: ${weatherData.multiday[i].humidity}`)
+					)
+				)
+			)
 		}
 
-		// let iconID;
-		// imageURL = `http://openweathermap.org/img/wn/${iconID}@4x.png`;
+		$(".forecastArea")
+			.empty()
+			.append($("<h2>").text(weatherData.city))
+			.append($("<div>")
+				.addClass("currentWeather")
+				.append($("<p>")
+					.text(`Temperature: ${weatherData.current.temp}`)
+				)
+				.append($("<p>")
+					.text(`Humidity: ${weatherData.current.humidity}`)
+				)
+				.append($("<p>")
+					.text(`Wind Speed: ${weatherData.current.windSpeed}`)
+				)
+				.append($("<p>")
+					.text(`UV Index: ${weatherData.current.uvi}`)
+				)
+			)
+			.append($("<h3>").text("5 Day Forecast"))
+			.append(multidayForecastArea)
 
-		// display multiday forecast
+	}
+
+	function citySearch(city, callback) {
+		multidaySearch(city).then(function (data) {
+			let multidayForecast = []
+
+			for (let i = 0; i < 5; i++) {
+				let forecast = data.list[i * 8];
+				let simpleForecast = {};
+
+				simpleForecast.date = forecast.dt_txt.slice(0, 10);
+				simpleForecast.iconID = forecast.weather[0].id;
+				simpleForecast.temp = forecast.main.temp;
+				simpleForecast.humidity = forecast.main.humidity;
 
 
-	});
+				multidayForecast.push(simpleForecast);
+			}
+
+			let coords = data.city.coord;
+
+			onecallSearch(coords.lat, coords.lon).then(function (data) {
+				let todayWeather = {};
+
+				// temperature, hummidty, wind speed, uv index, icon id
+
+				todayWeather.temp = data.current.temp;
+				todayWeather.humidity = data.current.humidity;
+				todayWeather.windSpeed = data.current.wind_speed;
+				todayWeather.uvi = data.current.uvi;
+
+				let weather = {
+					"city": city,
+					"current": todayWeather,
+					"multiday": multidayForecast
+				}
+				callback(weather);
+			});
+
+		});
+	}
 
 	function multidaySearch(city) {
 		let multidaystring = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${key}&units=imperial`;
 		return $.get(multidaystring);
+	}
+
+	function onecallSearch(lat, lon) {
+		let onecallString = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&appid=${key}`;
+		return $.get(onecallString);
 	}
 
 	$(".citySearch").on("submit", function (e) {
@@ -42,8 +106,13 @@ $(function () {
 
 		$("#citySearchBox").val("");
 
-		// add city to list
-		populateCities(cityName);
+		citySearch(cityName, function (data) {
+			//display weather
+			displayWeather(data);
+			// add city to list
+			populateCities(cityName);
+		});
+
 	});
 
 	function populateCities(modCity = "") {
@@ -77,11 +146,21 @@ $(function () {
 			// populate city list
 			citiesArray.forEach((city, index) => {
 				$cityList.append(
-					$("<li>").attr("tabindex", -1)
+					$("<li>")
+						.attr("tabindex", -1)
+
+						// search city on click
+						.on("click", function (e) {
+							let city = $(this).children("div").text();
+
+							citySearch(city, displayWeather);
+						})
+
 						// content
 						.append(
 							$("<div>").text(city)
 						)
+
 						// delete button
 						.append(
 							$("<button>")
@@ -89,6 +168,7 @@ $(function () {
 								.on("click", function (e) {
 									populateCities(parseInt($(this).attr("data-cityIndex")));
 								})
+
 								// metadata
 								.addClass("deleteButton")
 								.attr("data-cityIndex", index)

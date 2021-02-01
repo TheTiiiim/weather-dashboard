@@ -101,3 +101,28 @@ ul.cityList li:hover button.deleteButton {
 
 
 /* forecast area */
+
+div.forecastArea h3 {
+	font-size: 22px;
+}
+
+div.forecast {
+	text-align: center;
+	width: 100%;
+	margin: 0;
+}
+
+div.summaryWeather {
+	padding: 0;
+}
+
+div.summaryWeather div.summaryBorder {
+	border: 2px solid;
+	border-radius: 20px;
+	margin: 5px;
+	padding-top: 5px;
+}
+
+div.summaryWeather h4 {
+	font-size: 20px;
+}

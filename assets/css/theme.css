@@ -38,3 +38,8 @@ ul.cityList li button.deleteButton {
 ul.cityList li button.deleteButton:hover {
 	color: red;
 }
+
+div.summaryWeather div.summaryBorder {
+	border-color: #073B4C;
+	background-color: #139FCD;
+}
