@@ -4,7 +4,7 @@ $(function () {
 	populateCities();
 
 	function getWeatherIconSrc(id) {
-		return `http://openweathermap.org/img/wn/${id}@4x.png`;
+		return `http://openweathermap.org/img/wn/${id}.png`;
 	}
 
 	function displayWeather(weatherData) {
@@ -16,7 +16,12 @@ $(function () {
 				.addClass("summaryWeather col-xl-4 col-md-6 col-sm-12")
 				.append($("<div>").addClass("summaryBorder")
 					.append($("<h4>").text(weatherData.multiday[i].date))
-					.append($("<p>").text("icon"))
+					.append($("<p>")
+						.append($("<img>")
+							.attr("src", getWeatherIconSrc(weatherData.multiday[i].icon.id))
+							.attr("alt", weatherData.multiday[i].icon.description)
+						)
+					)
 					.append($("<p>")
 						.text(`Temperature: ${weatherData.multiday[i].temp}`)
 					)
@@ -33,13 +38,13 @@ $(function () {
 			.append($("<div>")
 				.addClass("currentWeather")
 				.append($("<p>")
-					.text(`Temperature: ${weatherData.current.temp}`)
+					.text(`Temperature: ${weatherData.current.temp} ${String.fromCharCode(176)}F`)
 				)
 				.append($("<p>")
-					.text(`Humidity: ${weatherData.current.humidity}`)
+					.text(`Humidity: ${weatherData.current.humidity}%`)
 				)
 				.append($("<p>")
-					.text(`Wind Speed: ${weatherData.current.windSpeed}`)
+					.text(`Wind Speed: ${weatherData.current.windSpeed} MPH`)
 				)
 				.append($("<p>")
 					.text(`UV Index: ${weatherData.current.uvi}`)
@@ -52,6 +57,7 @@ $(function () {
 
 	function citySearch(city, callback) {
 		multidaySearch(city).then(function (data) {
+			// console.log(data);
 			let multidayForecast = []
 
 			for (let i = 0; i < 5; i++) {
@@ -59,7 +65,10 @@ $(function () {
 				let simpleForecast = {};
 
 				simpleForecast.date = forecast.dt_txt.slice(0, 10);
-				simpleForecast.iconID = forecast.weather[0].id;
+				simpleForecast.icon = {
+					"id": forecast.weather[0].icon,
+					"description": forecast.weather[0].description
+				};
 				simpleForecast.temp = forecast.main.temp;
 				simpleForecast.humidity = forecast.main.humidity;
 
@@ -96,7 +105,7 @@ $(function () {
 	}
 
 	function onecallSearch(lat, lon) {
-		let onecallString = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&appid=${key}`;
+		let onecallString = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&appid=${key}&units=imperial`;
 		return $.get(onecallString);
 	}
 
